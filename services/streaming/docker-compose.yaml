@@ -1,0 +1,140 @@
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    networks:
+      - proxy
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Budapest
+    volumes:
+      - jellyfin_config:/config
+      - ${MOVIES_PATH}:/data/movies
+      - ${TV_PATH}:/data/tvshows
+    labels:
+      # proxy settings
+      - "traefik.enable=true"
+      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.jellyfin.entrypoints=websecure"
+      - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
+      - "traefik.http.routers.jellyfin.service=jellyfin"
+  
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    hostname: qbittorrent
+    networks:
+      - proxy
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
+    volumes:
+      - qbittorrent_config:/config
+      - ${DOWNLOADS_PATH}
+    ports:
+      #- 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    labels:
+      # proxy settings
+      - "traefik.enable=true"
+      - "traefik.http.routers.torrent.rule=Host(`torrent.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.torrent.entrypoints=websecure"
+      - "traefik.http.services.torrent.loadbalancer.server.port=8080"
+      - "traefik.http.routers.torrent.service=torrent"
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    hostname: prowlarr
+    networks:
+      - proxy
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - prowlarr_config:/config
+    labels:
+      # proxy settings
+      - "traefik.enable=true"
+      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.prowlarr.entrypoints=websecure"
+      - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
+      - "traefik.http.routers.prowlarr.service=prowlarr"
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    hostname: sonarr
+    networks:
+      - proxy
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - sonarr_config:/config
+      - ${MEDIA_PATH}:/data
+    # ports:
+    #   - 8989:8989
+    labels:
+      # proxy settings
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.sonarr.entrypoints=websecure"
+      - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
+      - "traefik.http.routers.sonarr.service=sonarr"
+    restart: unless-stopped
+  
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    hostname: radarr
+    networks:
+      - proxy
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - radarr_config:/config
+      - ${MEDIA_PATH}:/data
+
+    # ports:
+    #   - 7878:7878
+    labels:
+      # proxy settings
+      - "traefik.enable=true"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.radarr.entrypoints=websecure"
+      - "traefik.http.services.radarr.loadbalancer.server.port=7878"
+      - "traefik.http.routers.radarr.service=radarr"
+    restart: unless-stopped
+
+networks:
+  proxy:
+    name: proxy
+    external: true
+volumes:
+  jellyfin_config:
+    name: jellyfin_config
+  qbittorrent_config:
+    name: qbittorrent_config
+  prowlarr_config:
+    name: prowlarr_config
+  sonarr_config:
+    name: sonarr_config
+  radarr_config:
+    name: radarr_config
+  reiverr_config:
+    name: reiverr_config
+  reiverr_plugins:
+    name: reiverr_plugins

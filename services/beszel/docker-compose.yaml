@@ -1,0 +1,47 @@
+services:
+  beszel:
+    image: henrygd/beszel:latest
+    container_name: beszel
+    hostname: beszel
+    networks: 
+      - proxy
+    restart: unless-stopped
+    # ports:
+    #   - 8090:8090
+    volumes:
+      - data:/beszel_data
+      - agent_socket:/beszel_socket
+    environment:
+      - APP_URL=https://beszel.${DOMAIN_NAME}
+    labels:
+      - "traefik.enable=true"
+      # HTTPS-only router
+      - "traefik.http.routers.beszel.rule=Host(`beszel.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.beszel.entrypoints=websecure"
+      - "traefik.http.routers.beszel.service=beszel"
+      # Service (port 5380)
+      - "traefik.http.services.beszel.loadbalancer.server.port=8090"
+
+  beszel-agent:
+    image: henrygd/beszel-agent:latest
+    container_name: beszel-agent
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - agent_data:/var/lib/beszel-agent
+      - agent_socket:/beszel_socket
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      LISTEN: /beszel_socket/beszel.sock
+      HUB_URL: http://beszel:8090
+      TOKEN: ${TOKEN} #start hub first to get token and key
+      KEY: ${KEY}
+
+networks:
+  proxy:
+    name: proxy
+    external: true
+volumes:
+  data:
+  agent_data:
+  agent_socket:

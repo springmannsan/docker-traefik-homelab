@@ -1,0 +1,39 @@
+services:
+  backrest:
+    image: garethgeorge/backrest:latest
+    container_name: backrest
+    hostname: backrest
+    networks:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - backrest_data:/data
+      - backrest_config:/config
+      - backrest_cache:/cache
+      - ${SMB_SHARE}:/userdata/shares #smb share backup
+    environment:
+      - BACKREST_DATA=/data
+      - BACKREST_CONFIG=/config/config.json
+      - XDG_CACHE_HOME=/cache
+      - TMPDIR=/tmp
+      - TZ=Europe/Budapest 
+    restart: unless-stopped
+    labels:
+      # proxy settings
+      - "traefik.enable=true"
+      - "traefik.http.routers.backrest.rule=Host(`backrest.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.backrest.entrypoints=websecure"
+      - "traefik.http.services.backrest.loadbalancer.server.port=9898"
+      - "traefik.http.routers.backrest.service=backrest"
+
+networks:
+  proxy:
+    name: proxy
+    external: true
+volumes:
+  backrest_data:
+    name: backrest_data
+  backrest_config:
+    name: backrest_config
+  backrest_cache:
+    name: backrest_cache
