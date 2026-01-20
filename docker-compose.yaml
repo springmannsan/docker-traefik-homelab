@@ -76,6 +76,17 @@ services:
       # Basic‑auth middleware
       - "traefik.http.middlewares.dashboard-auth.basicauth.users=${TRAEFIK_DASHBOARD_CREDENTIALS}"
       - "traefik.http.routers.dashboard.middlewares=dashboard-auth@docker"
+    
+    cloudflare-tunnel:
+      container_name: cloudflare-tunnel
+      image: cloudflare/cloudflared:latest
+      restart: unless-stopped
+      networks:
+        - proxy
+      environment:
+        - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+      command: tunnel --no-autoupdate run
+
   
   portainer:
     image: portainer/portainer-ce:lts
