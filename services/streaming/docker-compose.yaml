@@ -16,7 +16,7 @@ services:
     labels:
       # proxy settings
       - "traefik.enable=true"
-      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.home.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.home.${DOMAIN_NAME}`) || Host(`streaming.${DOMAIN_NAME}`)"
       - "traefik.http.routers.jellyfin.entrypoints=websecure"
       - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
       - "traefik.http.routers.jellyfin.service=jellyfin"
