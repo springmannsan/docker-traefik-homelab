@@ -16,7 +16,7 @@ services:
     labels:
       # proxy settings
       - "traefik.enable=true"
-      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.home.${DOMAIN_NAME}`)"
       - "traefik.http.routers.jellyfin.entrypoints=websecure"
       - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
       - "traefik.http.routers.jellyfin.service=jellyfin"
@@ -43,7 +43,7 @@ services:
     labels:
       # proxy settings
       - "traefik.enable=true"
-      - "traefik.http.routers.torrent.rule=Host(`torrent.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.torrent.rule=Host(`torrent.home.${DOMAIN_NAME}`)"
       - "traefik.http.routers.torrent.entrypoints=websecure"
       - "traefik.http.services.torrent.loadbalancer.server.port=8080"
       - "traefik.http.routers.torrent.service=torrent"
@@ -64,7 +64,7 @@ services:
     labels:
       # proxy settings
       - "traefik.enable=true"
-      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.home.${DOMAIN_NAME}`)"
       - "traefik.http.routers.prowlarr.entrypoints=websecure"
       - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
       - "traefik.http.routers.prowlarr.service=prowlarr"
@@ -88,7 +88,7 @@ services:
     labels:
       # proxy settings
       - "traefik.enable=true"
-      - "traefik.http.routers.sonarr.rule=Host(`sonarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.home.${DOMAIN_NAME}`)"
       - "traefik.http.routers.sonarr.entrypoints=websecure"
       - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
       - "traefik.http.routers.sonarr.service=sonarr"
@@ -113,7 +113,7 @@ services:
     labels:
       # proxy settings
       - "traefik.enable=true"
-      - "traefik.http.routers.radarr.rule=Host(`radarr.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.home.${DOMAIN_NAME}`)"
       - "traefik.http.routers.radarr.entrypoints=websecure"
       - "traefik.http.services.radarr.loadbalancer.server.port=7878"
       - "traefik.http.routers.radarr.service=radarr"

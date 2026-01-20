@@ -21,7 +21,7 @@ services:
     labels:
       # proxy settings
       - "traefik.enable=true"
-      - "traefik.http.routers.backrest.rule=Host(`backrest.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.backrest.rule=Host(`backrest.home.${DOMAIN_NAME}`)"
       - "traefik.http.routers.backrest.entrypoints=websecure"
       - "traefik.http.services.backrest.loadbalancer.server.port=9898"
       - "traefik.http.routers.backrest.service=backrest"

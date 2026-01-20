@@ -69,7 +69,7 @@ services:
       - "traefik.enable=true"
 
       # Dashboard router
-      - "traefik.http.routers.dashboard.rule=Host(`dashboard.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.dashboard.rule=Host(`dashboard.home.${DOMAIN_NAME}`)"
       - "traefik.http.routers.dashboard.entrypoints=websecure"
       - "traefik.http.routers.dashboard.service=api@internal"
 
@@ -90,7 +90,7 @@ services:
     labels:
       # proxy settings
       - "traefik.enable=true"
-      - "traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.home.${DOMAIN_NAME}`)"
       - "traefik.http.routers.portainer.entrypoints=websecure"
       - "traefik.http.services.portainer.loadbalancer.server.port=9000"
       - "traefik.http.routers.portainer.service=portainer"
@@ -124,7 +124,7 @@ services:
     labels:
       - "traefik.enable=true"
       # HTTPS-only router
-      - "traefik.http.routers.technitium.rule=Host(`dns.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.technitium.rule=Host(`dns.home.${DOMAIN_NAME}`)"
       - "traefik.http.routers.technitium.entrypoints=websecure"
       - "traefik.http.routers.technitium.service=technitium"
       # Service (port 5380)

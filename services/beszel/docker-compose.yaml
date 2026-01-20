@@ -16,7 +16,7 @@ services:
     labels:
       - "traefik.enable=true"
       # HTTPS-only router
-      - "traefik.http.routers.beszel.rule=Host(`beszel.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.beszel.rule=Host(`beszel.home.${DOMAIN_NAME}`)"
       - "traefik.http.routers.beszel.entrypoints=websecure"
       - "traefik.http.routers.beszel.service=beszel"
       # Service (port 5380)
