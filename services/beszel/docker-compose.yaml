@@ -12,7 +12,7 @@ services:
       - data:/beszel_data
       - agent_socket:/beszel_socket
     environment:
-      - APP_URL=https://beszel.${DOMAIN_NAME}
+      - APP_URL=https://beszel.home.${DOMAIN_NAME}
     labels:
       - "traefik.enable=true"
       # HTTPS-only router
