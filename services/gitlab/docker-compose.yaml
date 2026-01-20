@@ -9,7 +9,7 @@ services:
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         gitlab_rails['gitlab_shell_ssh_port'] = 2424
-        external_url 'https://gitlab.${DOMAIN_NAME}'
+        external_url 'https://gitlab.home.${DOMAIN_NAME}'
         letsencrypt['enable'] = false
         nginx['listen_port'] = 80
         nginx['listen_https'] = false
