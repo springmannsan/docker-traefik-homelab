@@ -77,15 +77,15 @@ services:
       - "traefik.http.middlewares.dashboard-auth.basicauth.users=${TRAEFIK_DASHBOARD_CREDENTIALS}"
       - "traefik.http.routers.dashboard.middlewares=dashboard-auth@docker"
     
-    cloudflare-tunnel:
-      container_name: cloudflare-tunnel
-      image: cloudflare/cloudflared:latest
-      restart: unless-stopped
-      networks:
-        - proxy
-      environment:
-        - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
-      command: tunnel --no-autoupdate run
+  cloudflare-tunnel:
+    container_name: cloudflare-tunnel
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    networks:
+      - proxy
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    command: tunnel --no-autoupdate run
 
   
   portainer:
@@ -105,41 +105,6 @@ services:
       - "traefik.http.routers.portainer.entrypoints=websecure"
       - "traefik.http.services.portainer.loadbalancer.server.port=9000"
       - "traefik.http.routers.portainer.service=portainer"
-  
-  technitium-dns:
-    image: technitium/dns-server:latest
-    container_name: technitium-dns-server
-    hostname: dns-server
-    restart: unless-stopped
-    networks:
-      - proxy
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "853:853/tcp"
-    volumes:
-      - dns_config:/etc/dns
-      - dns_zones:/etc/dns/zones
-    environment:
-      - DNS_SERVER_DOMAIN=${DOMAIN_NAME}
-      # Default forwarders: Cloudflare + Google DNS
-      - DNS_SERVER_FORWARDERS=1.1.1.1,1.0.0.1,8.8.8.8,8.8.4.4
-      # Admin password: auto-generates random secure one on first run (check logs)
-      # Uncomment & set DNS_SERVER_ADMIN_PASSWORD=yourpass for fixed password
-      - DNS_SERVER_ADMIN_PASSWORD=${DNS_PASSWORD}
-      - DNS_SERVER_RECURSION=AllowOnlyForPrivateNetworks
-    sysctls:
-      - net.ipv4.ip_local_port_range=1024 65535
-    cap_add:
-      - NET_BIND_SERVICE
-    labels:
-      - "traefik.enable=true"
-      # HTTPS-only router
-      - "traefik.http.routers.technitium.rule=Host(`dns.home.${DOMAIN_NAME}`)"
-      - "traefik.http.routers.technitium.entrypoints=websecure"
-      - "traefik.http.routers.technitium.service=technitium"
-      # Service (port 5380)
-      - "traefik.http.services.technitium.loadbalancer.server.port=5380"
   
 volumes:
   portainer_data:
