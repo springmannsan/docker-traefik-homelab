@@ -7,7 +7,6 @@ A comprehensive Docker-based homelab infrastructure stack designed to manage and
 This project provides a complete infrastructure setup for a self-hosted homelab environment with:
 - **Traefik v3.6.1** - Modern reverse proxy and ingress controller with automatic SSL/TLS
 - **Cloudflare Integration** - DNS management and tunneling for secure external access
-- **Portainer** - Docker container management UI
 - **Multiple Services** - Pre-configured deployments for specialized applications
 
 ## Key Features
@@ -32,7 +31,7 @@ The homelab includes the following services:
 
 ```
 docker-traefik-homelab/
-├── docker-compose.yaml       # Main services (Traefik, Portainer, Cloudflare)
+├── docker-compose.yaml       # Main services (Traefik, Cloudflare)
 ├── setup.sh                  # Automated setup script for initial deployment
 ├── example.env               # Environment variables template
 ├── services/                 # Individual service configurations
