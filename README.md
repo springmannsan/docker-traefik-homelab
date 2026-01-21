@@ -25,6 +25,7 @@ The homelab includes the following services:
 - **backrest/** - Backup and restore management
 - **beszel/** - System monitoring and resource tracking
 - **gitlab/** - GitLab instance for version control and CI/CD
+- **mysql/** - MySQL database server
 - **streaming/** - Media streaming service
 
 ## Project Structure
@@ -38,6 +39,7 @@ docker-traefik-homelab/
 │   ├── backrest/
 │   ├── beszel/
 │   ├── gitlab/
+│   ├── mysql/
 │   └── streaming/
 └── README.md
 ```
