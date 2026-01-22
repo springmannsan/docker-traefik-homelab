@@ -102,8 +102,8 @@ services:
       - DOCKGE_STACKS_DIR=/opt/stacks
 
 volumes:
-  dockage-data:
-    name: dockage-data
+  dockage_data:
+    name: dockage_data
   dns_config:
     name: dns_config
   dns_zones:
