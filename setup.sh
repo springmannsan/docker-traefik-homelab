@@ -17,13 +17,29 @@ info "Checking prerequisites....."
 
 # If .env doesn't exists, error out
 [[ -f "${env_file}" ]] || err "Config file not found: ${env_file}"
-
-# Load .env
-source "${env_file}"
-
 # Check tailscale auth key in .env
 [[ -z "${TAILSCALE_AUTH_KEY:-}" ]] && err "TAILSCALE_AUTH_KEY not set"
 
+# Check cloudflare tunnel token in .env
+[[ -z "${CLOUDFLARE_TUNNEL_TOKEN:-}" ]] && err "CLOUDFLARE_TUNNEL_TOKEN not set"
+
+# Check cloudflare DNS API token in .env
+[[ -z "${CF_DNS_API_TOKEN:-}" ]] && err "CF_DNS_API_TOKEN not set"
+
+# Check traefik dashboard credentials in .env
+[[ -z "${TRAEFIK_DASHBOARD_CREDENTIALS:-}" ]] && err "TRAEFIK_DASHBOARD_CREDENTIALS not set"
+
+# Check domain name in .env
+[[ -z "${DOMAIN_NAME:-}" ]] && err "DOMAIN_NAME not set"
+
+# Check email in .env
+[[ -z "${EMAIL:-}" ]] && err "EMAIL not set"
+
+# Check SMB share path in .env
+[[ -z "${SMB_SHARE_PATH:-}" ]] && err "SMB_SHARE_PATH not set"
+
+# Load .env
+source "${env_file}"
 
 # Check root user id
 if [ "$(id -u)" -ne 0 ]; then
