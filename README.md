@@ -128,7 +128,7 @@ All services use the `proxy` Docker network for inter-container communication. S
 
 - Traefik exposes Prometheus metrics on the configured metrics endpoint
 - Beszel provides system-level monitoring and resource tracking
-- Portainer offers a comprehensive Docker management interface
+- Dockage offers a comprehensive Docker management interface
 - Access logs are enabled on Traefik for debugging
 
 ## License
