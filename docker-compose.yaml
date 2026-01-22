@@ -95,24 +95,22 @@ services:
       - proxy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - dockage_data:/app/data
+      - dockge:/app/data
       - ${PROVISION_FOLDER_FULL_PATH}/services:/opt/stacks
     environment:
       # Tell Dockge where to find the stacks
       - DOCKGE_STACKS_DIR=/opt/stacks
     labels:
-      # Enable self‑routing
+      # proxy settings
       - "traefik.enable=true"
-
-      # Dashboard router
       - "traefik.http.routers.dockge.rule=Host(`dockge.home.${DOMAIN_NAME}`)"
       - "traefik.http.routers.dockge.entrypoints=websecure"
+      - "traefik.http.services.dockge.loadbalancer.server.port=5001"
       - "traefik.http.routers.dockge.service=dockge"
-      - "traefik.http.services.gitlab.loadbalancer.server.port=5001"
 
 volumes:
-  dockage_data:
-    name: dockage_data
+  dockge_data:
+    name: dockge_data
   dns_config:
     name: dns_config
   dns_zones:
