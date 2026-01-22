@@ -38,6 +38,9 @@ info "Checking prerequisites....."
 # Check SMB share path in .env
 [[ -z "${SMB_SHARE_PATH:-}" ]] && err "SMB_SHARE_PATH not set"
 
+# Check provision folder path in .env
+[[ -z "${PROVISION_FOLDER_FULL_PATH:-}" ]] && err "PROVISION_FOLDER_FULL_PATH not set"
+
 # Load .env
 source "${env_file}"
 
