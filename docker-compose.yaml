@@ -59,8 +59,8 @@ services:
       - "--certificatesresolvers.le.acme.email=${EMAIL}"
       - "--certificatesresolvers.le.acme.storage=/acme.json"
       - "--certificatesresolvers.le.acme.dnschallenge.provider=cloudflare"
-      #comment out for PROD 
-      - "--certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      #delete comment for testing environments 
+      #- "--certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
       # Optionally make 'le' the default resolver for TLS-enabled routers
       - "--entrypoints.websecure.http.tls.certresolver=le"
 

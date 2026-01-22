@@ -76,9 +76,7 @@ docker-traefik-homelab/
    - `TAILSCALE_AUTH_KEY` - Tailscale authentication key (if using Tailscale VPN)
    - `SMB_SHARE_PATH`, `SMB_USER`, `SMB_PASSWORD` - SMB network storage credentials
 
-5. Comment out line 63 in for DNS challenge (production environments)
-
-6. Configure Cloudflare tunnel application routes via cloudflare-tunneled
+5. Configure Cloudflare tunnel application routes via cloudflare-tunneled
 
 ### Deployment
 
