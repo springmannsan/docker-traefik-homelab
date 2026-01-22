@@ -108,6 +108,7 @@ services:
       - "traefik.http.routers.dockge.rule=Host(`dockge.home.${DOMAIN_NAME}`)"
       - "traefik.http.routers.dockge.entrypoints=websecure"
       - "traefik.http.routers.dockge.service=dockge"
+      - "traefik.http.services.gitlab.loadbalancer.server.port=5001"
 
 volumes:
   dockage_data:
